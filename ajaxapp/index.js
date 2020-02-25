@@ -1,49 +1,64 @@
-console.log("index.js: loaded");
-const heading = document.querySelector("h2");
-const headingText = heading.textContent;
-const button = document.createElement("button");
-button.textContent = "Push Me";
-document.body.appendChild(button);
+async function main() {
+  try {
+    const userId = getUserId();
+    const userInfo = await fetchUserInfo(userId);
+    const view = createView(userInfo);
+    displayView(view);
+  } catch (error) {
+    console.error(`エラーが発生しました (${error})`);
+  }
+}
 
 function fetchUserInfo(userId) {
-  fetch(`https://api.github.com/users/${encodeURIComponent(userId)}`)
+  return fetch(`https://api.github.com/users/${encodeURIComponent(userId)}`)
     .then(response => {
-      console.log(response.status);
-      // エラーレスポンスが返されたことを検知する
       if (!response.ok) {
-        console.error("エラーレスポンス", response);
+        return Promise.reject(new Error(`${response.status}: ${response.statusText}`));
       } else {
-        return response.json().then(userInfo => {
-          // JSONパースされたオブジェクトが渡る
-          console.log(userInfo);
-        });
+        return response.json();
       }
-    }).catch(error => {
-      console.log(error);
     });
 }
 
-/*
-// XMLHttpRequest ver.
-function fetchUserInfo(userId) {
-  // リクエストの作成
-  const request = new XMLHttpRequest();
-  request.open("GET", `https://api.github.com/users/${encodeURIComponent(userId)}`);
-  request.addEventListener("load", () => {
-    //リクエストが成功したかを判定する
-    // Fetch APIのresponse.okと同等の意味
-    if (request.status >= 200 && request.status < 300) {
-      // レスポンス文字列をJSONオブジェクトにパースする
-      const userInfo = JSON.parse(request.responseText);
-      console.log(userInfo);
+function getUserId() {
+  const value = document.getElementById("userId").value;
+  return encodeURIComponent(value);
+}
+
+function createView(userInfo) {
+  return escapeHTML `
+    <h4>${userInfo.name} (@${userInfo.login})</h4>
+    <img src="${userInfo.avatar_url}" alt="${userInfo.login}" height="100">
+    <dl>
+        <dt>Location</dt>
+        <dd>${userInfo.location}</dd>
+        <dt>Repositories</dt>
+        <dd>${userInfo.public_repos}</dd>
+    </dl>
+    `;
+}
+
+function displayView(view) {
+  const result = document.getElementById("result");
+  result.innerHTML = view;
+}
+
+function escapeSpecialChars(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function escapeHTML(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    const value = values[i - 1];
+    if (typeof value === "string") {
+      return result + escapeSpecialChars(value) + str;
     } else {
-      console.error("エラーレスポンス", request.statusText);
+      return result + String(value) + str;
     }
   });
-  request.addEventListener("error", () => {
-    console.error("ネットワークエラー");
-  });
-  // リクエストを処理する
-  request.send();
 }
-*/
