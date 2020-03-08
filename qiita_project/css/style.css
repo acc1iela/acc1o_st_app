@@ -156,3 +156,12 @@ hr {
 input,
 select {
   vertical-align: middle; }
+
+.u-bottom-large {
+  margin-bottom: 20px; }
+
+.u-bottom-medium {
+  margin-bottom: 15px; }
+
+.u-bottom-small {
+  margin-bottom: 10px; }
