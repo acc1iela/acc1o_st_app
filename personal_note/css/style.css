@@ -1,3 +1,12 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+}
+
 .accordion-trigger {
   text-align: left;
   cursor: pointer;
@@ -20,7 +29,7 @@
   height: 2px;
   width: 12px;
   background-color: #000;
-  transition: all .1s ease-out;
+  transition: all 0.1s ease-out;
 }
 
 .accordion-trigger::after {
@@ -34,7 +43,6 @@
 
 /* /icon */
 
-
 .accordion-target {
   /* target */
   box-sizing: border-box;
@@ -43,7 +51,7 @@
   text-align: left;
 }
 
-.accordion-target.list>.list__item {
+.accordion-target.list > .list__item {
   /* target-child */
   box-sizing: border-box;
   border-bottom: 1px solid #ccc;
@@ -52,11 +60,62 @@
   padding-bottom: 15px;
 }
 
-.accordion-target.list>.list__item>a {
+.accordion-target.list > .list__item > a {
   display: block;
   margin-top: -15px;
   margin-bottom: -15px;
   padding: 15px;
   color: #000;
   text-decoration: none;
+}
+
+/* sample */
+
+.stickyFooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-top: 2px solid #dbdbdb;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 99;
+  display: none;
+}
+
+.stickyFooter-inner {
+  width: 960px;
+  padding: 7px 0 9px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.stickyFooter-inner-switch {
+  padding: 10px 0 10px 95px;
+  box-sizing: border-box;
+}
+
+.l-vertical {
+  float: left;
+}
+
+.l-vertical > img:nth-of-type(2) {
+  padding-right: 5px;
+}
+
+.stickyFooter-samurai {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.clearfix::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+.btn {
+  width: 48%;
+  display: inline-block;
+  float: left;
 }
