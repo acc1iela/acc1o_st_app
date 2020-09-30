@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,eAAe,CAAC;EACd,aAAa,EAAE,IAAI;CACpB;;AAED,AAAA,gBAAgB,CAAC;EACf,aAAa,EAAE,IAAI;CACpB;;AAED,AAAA,eAAe,CAAC;EACd,aAAa,EAAE,IAAI;CACpB",
-    "sources": [
-        "u-margin.scss"
-    ],
-    "names": [],
-    "file": "u-margin.css"
-}
